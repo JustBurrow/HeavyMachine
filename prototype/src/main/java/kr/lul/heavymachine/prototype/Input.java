@@ -20,6 +20,10 @@ public class Input {
     return String.join(" ", this.command);
   }
 
+  public String[] getCommandArray() {
+    return this.command.toArray(new String[0]);
+  }
+
   public List<String> getCommandList() {
     return this.command;
   }

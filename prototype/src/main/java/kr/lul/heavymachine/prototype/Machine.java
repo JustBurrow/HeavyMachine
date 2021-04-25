@@ -1,12 +1,18 @@
 package kr.lul.heavymachine.prototype;
 
-import org.apache.commons.io.IOUtils;
-
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.List;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.util.Arrays;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
+import static java.nio.channels.Channels.newChannel;
+import static java.nio.channels.Channels.newReader;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static kr.lul.common.util.Arguments.notNull;
+import static org.apache.commons.io.IOUtils.toBufferedReader;
 
 /**
  * 쉘 명령어를 실행하는 프로토타입.
@@ -15,25 +21,56 @@ import static kr.lul.common.util.Arguments.notNull;
  * @since 2021/04/25
  */
 public class Machine {
+  private static final ExecutorService EXECUTOR = Executors.newCachedThreadPool();
+
   public Output run(Input input) {
     notNull(input, "input");
 
-    Runtime runtime = Runtime.getRuntime();
-
+    ProcessBuilder builder = new ProcessBuilder(input.getCommandArray());
     try {
-      String command = input.getCommand();
-      System.out.println("COMMAND : " + command);
+      Process process = builder.start();
+      final StringBuilder outputSb = new StringBuilder();
+      EXECUTOR.submit(() -> {
+        try (
+            Reader reader = new InputStreamReader(process.getInputStream(), UTF_8);
+        ) {
+          do {
+            int cp = reader.read();
+            char[] ch = Character.toChars(cp);
+            if (0 == Arrays.compare(new char[]{'\n'}, ch) || 0 == Arrays.compare(new char[]{'\n', '\r'}, ch)) {
+              outputSb.setLength(0);
+            } else {
+              outputSb.append((char) cp);
+            }
+          } while (true);
+        } catch (IOException e) {
+        }
+      });
+      EXECUTOR.submit(() -> {
+        try (BufferedReader reader = toBufferedReader(newReader(newChannel(process.getErrorStream()), UTF_8))) {
+          for (String line = reader.readLine(); null != line; line = reader.readLine()) {
+          }
+        } catch (IOException e) {
+          throw new RuntimeException(e);
+        }
+      });
+      EXECUTOR.submit(() -> {
+        while (process.isAlive()) {
+          //noinspection CatchMayIgnoreException
+          try {
+            Thread.sleep(0L, 10);
 
-      Process process = runtime.exec(command);
-      while (process.isAlive()) {
-        Thread.sleep(100L);
-      }
+            if (0 <= outputSb.indexOf("Are you sure you want to continue? [y/N] ")) {
+              System.out.println("require input.");
+              wait();
+            }
+          } catch (InterruptedException e) {
+          }
+        }
+      });
+      int exitCode = process.waitFor();
 
-      int exitCode = process.exitValue();
-      List<String> out = IOUtils.readLines(process.getInputStream(), UTF_8);
-      List<String> error = IOUtils.readLines(process.getErrorStream(), UTF_8);
-
-      return new Output(exitCode, out, error);
+      return null;
     } catch (IOException | InterruptedException e) {
       throw new RuntimeException(e);
     }

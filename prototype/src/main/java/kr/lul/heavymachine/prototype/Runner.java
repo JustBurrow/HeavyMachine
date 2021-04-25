@@ -9,17 +9,17 @@ import java.util.List;
 public class Runner {
   public static void main(String[] args) {
     for (String command : List.of(
-        "docker -l=debug image prune -f",
-        "docker -l=debug pull mysql",
-        "docker -l=debug image ls -a",
-        "docker -l=debug inspect mysql",
-        "ls -alh"
+        "docker -l=debug image prune"
+//        "docker -l=debug pull mysql",
+//        "docker -l=debug image ls -a",
+//        "docker -l=debug inspect mysql",
+//        "ls -alh"
     )) {
       Input input = new Input(command);
       System.out.println(input);
       Machine machine = new Machine();
       Output output = machine.run(input);
-      print(output);
+//      print(output);
     }
   }
 
