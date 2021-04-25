@@ -1,5 +1,7 @@
 package kr.lul.heavymachine.shell;
 
+import kr.lul.heavymachine.core.MachineRunException;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,7 +11,7 @@ import static kr.lul.heavymachine.shell.ShellOutput.EXIT_CODE_UNKNOWN;
  * @author justburrow
  * @since 2021/04/25
  */
-public class ShellCommandException extends Exception {
+public class ShellCommandException extends MachineRunException {
   private static final Pattern EXIT_CODE_PATTERN = Pattern.compile(".*error=(\\d+).*");
 
   private final int exitCode;
