@@ -9,11 +9,11 @@ import java.util.List;
 public class Runner {
   public static void main(String[] args) {
     for (String command : List.of(
-        "docker -l=debug image prune"
-//        "docker -l=debug pull mysql",
-//        "docker -l=debug image ls -a",
-//        "docker -l=debug inspect mysql",
-//        "ls -alh"
+        "docker -l=debug image prune",
+        "docker -l=debug pull mysql",
+        "docker -l=debug image ls -a",
+        "docker -l=debug inspect mysql",
+        "ls -alh"
     )) {
       Input input = new Input(command);
       System.out.println(input);
@@ -28,18 +28,16 @@ public class Runner {
     if (output.getOutput().isEmpty()) {
       System.out.println("OUTPUT : N/A");
     } else {
-      System.out.println("OUTPUT :");
       for (String line : output.getOutput()) {
-        System.out.println(line);
+        System.out.println("OUTPUT : " + line);
       }
     }
 
     if (output.getError().isEmpty()) {
       System.out.println("\nERROR : N/A");
     } else {
-      System.out.println("\nERROR :");
       for (String line : output.getError()) {
-        System.out.println(line);
+        System.out.println("\nERROR : " + line);
       }
     }
   }
