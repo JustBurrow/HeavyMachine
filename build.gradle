@@ -11,15 +11,20 @@ buildscript {
   }
 }
 
+repositories {
+  mavenLocal()
+  mavenCentral()
+}
+
+apply plugin: 'eclipse'
 apply plugin: 'groovy'
 apply plugin: 'idea'
-apply plugin: 'eclipse'
+apply plugin: 'io.spring.dependency-management'
 
 group = 'kr.lul.heavymachine'
 version = '0.1.0-SNAPSHOT'
 
 subprojects {
-  //noinspection GroovyAssignabilityCheck
   repositories {
     mavenLocal()
     mavenCentral()
@@ -51,13 +56,14 @@ subprojects {
       dependency 'org.apache.commons:commons-lang3:3.11'
       dependency 'org.apache.commons:commons-text:1.9'
       dependency 'org.codehaus.groovy:groovy:3.0.5'
-      dependency 'org.spockframework:spock-spring:2.0-M5-groovy-3.0'
+      dependency 'org.spockframework:spock-core:2.0-M5-groovy-3.0'
     }
   }
 
   dependencies {
-    implementation 'kr.lul.common:common-util'
     implementation 'kr.lul.common:common-logging'
+    implementation 'kr.lul.common:common-util'
+    implementation 'ch.qos.logback:logback-classic'
 
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
@@ -69,7 +75,7 @@ subprojects {
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
       exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
-    testImplementation 'org.spockframework:spock-spring'
+    testImplementation 'org.spockframework:spock-core'
   }
 
   bootJar.enabled = false

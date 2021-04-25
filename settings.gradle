@@ -1,3 +1,4 @@
 rootProject.name = 'HeavyMachine'
 
-include 'prototype'
+include 'core',
+    'prototype'
