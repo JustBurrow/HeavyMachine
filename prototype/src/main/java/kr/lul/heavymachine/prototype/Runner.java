@@ -19,19 +19,28 @@ public class Runner {
       System.out.println(input);
       Machine machine = new Machine();
       Output output = machine.run(input);
-//      print(output);
+      print(output);
     }
   }
 
   private static void print(Output output) {
     System.out.println("EXIT CODE : " + output.getExitCode());
-    System.out.println("OUTPUT :");
-    for (String line : output.getOutput()) {
-      System.out.println(line);
+    if (output.getOutput().isEmpty()) {
+      System.out.println("OUTPUT : N/A");
+    } else {
+      System.out.println("OUTPUT :");
+      for (String line : output.getOutput()) {
+        System.out.println(line);
+      }
     }
-    System.out.println("\n\nError :");
-    for (String line : output.getError()) {
-      System.out.println(line);
+
+    if (output.getError().isEmpty()) {
+      System.out.println("\nERROR : N/A");
+    } else {
+      System.out.println("\nERROR :");
+      for (String line : output.getError()) {
+        System.out.println(line);
+      }
     }
   }
 }
