@@ -11,25 +11,21 @@ buildscript {
   }
 }
 
-repositories {
-  mavenLocal()
-  mavenCentral()
-}
-
 apply plugin: 'eclipse'
-apply plugin: 'groovy'
 apply plugin: 'idea'
-apply plugin: 'io.spring.dependency-management'
 
 group = 'kr.lul.heavymachine'
 version = '0.1.0-SNAPSHOT'
 
-subprojects {
+allprojects {
+  //noinspection GroovyAssignabilityCheck
   repositories {
     mavenLocal()
     mavenCentral()
   }
+}
 
+subprojects {
   apply plugin: 'groovy'
   apply plugin: 'io.spring.dependency-management'
   apply plugin: 'jacoco'
@@ -63,11 +59,6 @@ subprojects {
   dependencies {
     implementation 'kr.lul.common:common-logging'
     implementation 'kr.lul.common:common-util'
-    implementation 'ch.qos.logback:logback-classic'
-
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     testImplementation 'org.apache.commons:commons-lang3'
     testImplementation 'org.apache.commons:commons-text'
