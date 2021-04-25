@@ -16,7 +16,7 @@ import static kr.lul.common.util.Arguments.notNull;
  * @since 2021/04/25
  */
 public class Machine {
-  private static final ExecutorService EXECUTOR = Executors.newCachedThreadPool();
+  static final ExecutorService EXECUTOR = Executors.newCachedThreadPool();
 
   public Output run(Input input) {
     notNull(input, "input");
@@ -63,6 +63,7 @@ public class Machine {
       });
 
       while (process.isAlive()) {
+        //noinspection BusyWait
         sleep(1L);
       }
       int exitCode = process.exitValue();

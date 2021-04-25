@@ -21,6 +21,7 @@ public class Runner {
       Output output = machine.run(input);
       print(output);
     }
+    Machine.EXECUTOR.shutdownNow();
   }
 
   private static void print(Output output) {
