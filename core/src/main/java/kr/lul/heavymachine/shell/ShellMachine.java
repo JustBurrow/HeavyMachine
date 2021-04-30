@@ -5,6 +5,7 @@ import kr.lul.heavymachine.core.Machine;
 import java.io.IOException;
 
 import static kr.lul.common.util.Arguments.notNull;
+import static kr.lul.heavymachine.shell.ShellMachineHandlers.*;
 
 /**
  * @author justburrow
@@ -16,7 +17,7 @@ public class ShellMachine implements Machine<ShellCommand, ShellOutcome> {
   private final StdErrHandler stderr;
 
   public ShellMachine() {
-    this(StdInHandler.NULL_HANDLER, StdOutHandler.NULL_HANDLER, StdErrHandler.NULL_HANDLER);
+    this(NULL_STDIN_HANDLER, NULL_STDOUT_HANDLER, NULL_STDERR_HANDLER);
   }
 
   public ShellMachine(StdInHandler stdin, StdOutHandler stdout, StdErrHandler stderr) {

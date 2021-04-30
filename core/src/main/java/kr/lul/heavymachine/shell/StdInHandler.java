@@ -7,8 +7,6 @@ import java.io.OutputStream;
  * @since 2021/04/25
  */
 public interface StdInHandler {
-  StdInHandler NULL_HANDLER = stream -> {
-  };
 
   void setStdIn(OutputStream stream);
 }

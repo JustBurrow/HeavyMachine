@@ -7,8 +7,6 @@ import java.io.InputStream;
  * @since 2021/04/25
  */
 public interface StdErrHandler {
-  StdErrHandler NULL_HANDLER = stream -> {
-  };
 
   void setStdErr(InputStream stream);
 }
