@@ -10,7 +10,7 @@ import static kr.lul.common.util.Arguments.notNull;
  * @author justburrow
  * @since 2021/04/25
  */
-public class ShellMachine implements Machine<ShellInput, ShellOutput> {
+public class ShellMachine implements Machine<ShellCommand, ShellOutcome> {
   private final StdInHandler stdin;
   private final StdOutHandler stdout;
   private final StdErrHandler stderr;
@@ -25,7 +25,7 @@ public class ShellMachine implements Machine<ShellInput, ShellOutput> {
     this.stderr = notNull(stderr, "stderr");
   }
 
-  private ShellOutput doRun(ShellInput input) throws IOException, InterruptedException, ShellCommandException {
+  private ShellOutcome doRun(ShellCommand input) throws IOException, InterruptedException, ShellCommandException {
     ProcessBuilder builder = new ProcessBuilder(input.getCommandList());
     Process process;
     try {
@@ -39,17 +39,17 @@ public class ShellMachine implements Machine<ShellInput, ShellOutput> {
     this.stderr.setStream(process.getErrorStream());
 
     int exitCode = process.waitFor();
-    ShellOutput output = new ShellOutput(exitCode);
+    ShellOutcome output = new ShellOutcome(exitCode);
 
     return output;
   }
 
   @Override
-  public ShellOutput run(ShellInput input) {
+  public ShellOutcome run(ShellCommand input) {
     try {
       return doRun(input);
     } catch (ShellCommandException e) {
-      return new ShellOutput(e.getExitCode());
+      return new ShellOutcome(e.getExitCode());
     } catch (IOException | InterruptedException e) {
       throw new RuntimeException(e);
     }

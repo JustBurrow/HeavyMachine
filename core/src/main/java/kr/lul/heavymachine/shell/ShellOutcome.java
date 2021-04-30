@@ -1,6 +1,6 @@
 package kr.lul.heavymachine.shell;
 
-import kr.lul.heavymachine.core.Output;
+import kr.lul.heavymachine.core.Outcome;
 
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -11,12 +11,12 @@ import static kr.lul.common.util.Arguments.notNegative;
  * @author justburrow
  * @since 2021/04/25
  */
-public class ShellOutput implements Output {
+public class ShellOutcome implements Outcome {
   public static final int EXIT_CODE_UNKNOWN = 255;
-  
+
   private int exitCode;
 
-  public ShellOutput(int exitCode) {
+  public ShellOutcome(int exitCode) {
     this.exitCode = notNegative(exitCode);
   }
 
@@ -33,7 +33,7 @@ public class ShellOutput implements Output {
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    ShellOutput that = (ShellOutput) o;
+    ShellOutcome that = (ShellOutcome) o;
     return this.exitCode == that.exitCode;
   }
 
@@ -44,7 +44,7 @@ public class ShellOutput implements Output {
 
   @Override
   public String toString() {
-    return new StringJoiner(", ", ShellOutput.class.getSimpleName() + "[", "]")
+    return new StringJoiner(", ", ShellOutcome.class.getSimpleName() + "[", "]")
                .add("exitCode=" + this.exitCode)
                .toString();
   }

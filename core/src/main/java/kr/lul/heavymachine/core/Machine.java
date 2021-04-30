@@ -6,6 +6,6 @@ package kr.lul.heavymachine.core;
  * @author justburrow
  * @since 2021/04/25
  */
-public interface Machine<I extends Input, O extends Output> {
+public interface Machine<I extends Command, O extends Outcome> {
   O run(I input);
 }

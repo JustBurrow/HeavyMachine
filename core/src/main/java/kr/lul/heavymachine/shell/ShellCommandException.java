@@ -5,7 +5,7 @@ import kr.lul.heavymachine.core.MachineRunException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static kr.lul.heavymachine.shell.ShellOutput.EXIT_CODE_UNKNOWN;
+import static kr.lul.heavymachine.shell.ShellOutcome.EXIT_CODE_UNKNOWN;
 
 /**
  * @author justburrow
