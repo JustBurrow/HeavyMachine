@@ -7,11 +7,8 @@ import java.io.InputStream;
  * @since 2021/04/25
  */
 public interface StdOutHandler {
-  StdOutHandler NULL_HANDLER = new StdOutHandler() {
-    @Override
-    public void setStream(InputStream stream) {
-    }
+  StdOutHandler NULL_HANDLER = stream -> {
   };
 
-  void setStream(InputStream stream);
+  void setStdOut(InputStream stream);
 }

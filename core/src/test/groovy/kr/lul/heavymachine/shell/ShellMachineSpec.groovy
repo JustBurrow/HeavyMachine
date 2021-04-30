@@ -24,7 +24,7 @@ class ShellMachineSpec extends Specification {
     LOGGER.info("[GIVEN] command=$command")
 
     when:
-    def output = machine.run(new ShellCommand(command))
+    def output = machine.execute(new ShellCommand(command))
     LOGGER.info("[WHEN] output=$output")
 
     then:
@@ -42,7 +42,7 @@ class ShellMachineSpec extends Specification {
     LOGGER.info("[GIVEN] command=$command")
 
     when:
-    def output = machine.run(new ShellCommand(command))
+    def output = machine.execute(new ShellCommand(command))
     LOGGER.info("[WHEN] output=$output")
 
     then:

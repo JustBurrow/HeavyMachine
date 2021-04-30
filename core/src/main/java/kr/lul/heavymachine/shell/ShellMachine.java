@@ -34,9 +34,9 @@ public class ShellMachine implements Machine<ShellCommand, ShellOutcome> {
       throw new ShellCommandException(e);
     }
 
-    this.stdin.setStream(process.getOutputStream());
-    this.stdout.setStream(process.getInputStream());
-    this.stderr.setStream(process.getErrorStream());
+    this.stdin.setStdIn(process.getOutputStream());
+    this.stdout.setStdOut(process.getInputStream());
+    this.stderr.setStdErr(process.getErrorStream());
 
     int exitCode = process.waitFor();
     ShellOutcome output = new ShellOutcome(exitCode);
@@ -45,7 +45,7 @@ public class ShellMachine implements Machine<ShellCommand, ShellOutcome> {
   }
 
   @Override
-  public ShellOutcome run(ShellCommand input) {
+  public ShellOutcome execute(ShellCommand input) {
     try {
       return doRun(input);
     } catch (ShellCommandException e) {
