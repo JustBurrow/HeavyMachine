@@ -45,9 +45,9 @@ public class ShellMachine implements Machine<ShellCommand, ShellOutcome> {
   }
 
   @Override
-  public ShellOutcome execute(ShellCommand input) {
+  public ShellOutcome execute(ShellCommand command) {
     try {
-      return doRun(input);
+      return doRun(command);
     } catch (ShellCommandException e) {
       return new ShellOutcome(e.getExitCode());
     } catch (IOException | InterruptedException e) {
