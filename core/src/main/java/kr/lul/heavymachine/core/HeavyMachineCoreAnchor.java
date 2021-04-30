@@ -1,4 +1,4 @@
-package kr.lul.heavymachine.core.machine;
+package kr.lul.heavymachine.core;
 
 import kr.lul.common.util.Anchor;
 

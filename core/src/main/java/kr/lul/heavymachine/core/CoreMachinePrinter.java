@@ -1,4 +1,8 @@
-package kr.lul.heavymachine.core.machine;
+package kr.lul.heavymachine.core;
+
+import kr.lul.heavymachine.core.machine.Blueprint;
+import kr.lul.heavymachine.core.machine.Machine;
+import kr.lul.heavymachine.core.machine.MachinePrinter;
 
 import static kr.lul.common.util.Arguments.notNull;
 
