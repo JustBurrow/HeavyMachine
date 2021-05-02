@@ -17,6 +17,8 @@ public class CoreMachinePrinter implements MachinePrinter<Blueprint, Machine> {
   public Machine print(Blueprint blueprint) {
     notNull(blueprint, "blueprint");
 
+    // TODO
+
     throw new UnsupportedOperationException("not implemented.");
   }
 }
