@@ -19,6 +19,14 @@ public interface Control {
   ExecutorService executorService();
 
   /**
+   * 옵션 설정.
+   *
+   * @param key    옵션 이름.
+   * @param option 옵션 값.
+   */
+  void put(String key, Object option);
+
+  /**
    * @param key 옵션 이름.
    *
    * @return 제어 옵션.
@@ -33,7 +41,7 @@ public interface Control {
    * @return 제어 옵션.
    */
   default <V> V get(String key, Class<V> type) {
-    Object val = get(notNull(key, "key"));
-    return notNull(type, "type").cast(val);
+    return notNull(type, "type")
+               .cast(get(notNull(key, "key")));
   }
 }
