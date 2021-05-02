@@ -25,13 +25,6 @@ public class SimpleShellMachine implements ShellMachine {
   }
 
   @Override
-  public String[] buildCommand(Control control) {
-    notNull(control, "control");
-
-    return this.blueprint.getCommand();
-  }
-
-  @Override
   public ShellOutcome execute(Control control) throws MachineExecutionFailException {
     notNull(control, "control");
 

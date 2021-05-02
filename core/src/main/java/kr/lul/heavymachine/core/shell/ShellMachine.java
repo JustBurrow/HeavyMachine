@@ -19,7 +19,9 @@ public interface ShellMachine extends Machine {
    *
    * @return 쉘 커맨드.
    */
-  String[] buildCommand(Control control);
+  default String[] buildCommand(Control control) {
+    return getBlueprint().getCommand();
+  }
 
   @Override
   ShellOutcome execute(Control control) throws MachineExecutionFailException;
