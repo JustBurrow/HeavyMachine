@@ -3,7 +3,7 @@ package kr.lul.heavymachine.core.machine;
 import java.util.UUID;
 
 /**
- * 변경 불가능한 {@link Machine} 초기화 정보.
+ * {@link Machine}의 기능 정보. immutable.
  *
  * @author justburrow
  * @since 2021/04/30
