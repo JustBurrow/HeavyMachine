@@ -29,5 +29,13 @@ public abstract class AbstractMachine<B extends Blueprint, O extends Outcome> im
     }
   }
 
+  /**
+   * @param control 실행 제어 옵션. non-null.
+   *
+   * @return 실행 결과
+   *
+   * @throws IOException
+   * @throws InterruptedException
+   */
   protected abstract O doExecute(Control control) throws IOException, InterruptedException;
 }
