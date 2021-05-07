@@ -3,6 +3,7 @@ package kr.lul.heavymachine.core.prompt;
 import kr.lul.heavymachine.core.machine.AbstractBlueprint;
 
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.UUID;
 
 import static java.util.UUID.randomUUID;
@@ -37,5 +38,15 @@ public class SimplePromptBlueprint extends AbstractBlueprint implements PromptBl
   @Override
   public List<String> baseCommand() {
     return this.baseCommand;
+  }
+
+  @Override
+  public String toString() {
+    return new StringJoiner(", ", SimplePromptBlueprint.class.getSimpleName() + "[", "]")
+               .add("id=" + this.id)
+               .add("name='" + this.name + "'")
+               .add("description='" + this.description + "'")
+               .add("baseCommand=" + this.baseCommand)
+               .toString();
   }
 }

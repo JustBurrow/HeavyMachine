@@ -38,8 +38,10 @@ public abstract class AbstractPromptHandler implements PromptHandler {
    * 별도의 스레드에서 지속적으로 표준입력을 해야 하는지 여부.
    *
    * @return 입력을 발생시키는 별도의 스레드가 필요하면 {@code true}. 기본값 {@code false}.
+   *
+   * @see #stdInHandler(Writer, Reader, Reader) {@code true}를 반환하도록 오버라이드는 하는 경우, 함께 오버라이드 해야 한다.
    */
-  protected boolean hasStdInHandler() {
+  public boolean hasStdInHandler() {
     return false;
   }
 
@@ -51,10 +53,11 @@ public abstract class AbstractPromptHandler implements PromptHandler {
    * @param stderr 표준에러.
    *
    * @return 표준입력을 발생시키는 스레드. non-null.
+   *
+   * @see #hasStdInHandler() {@code true}를 반환하도록 오버라이드는 하는 경우, 함께 오버라이드 해야 한다.
    */
-  protected Runnable stdInHandler(Writer stdin, Reader stdout, Reader stderr) {
-    return () -> {
-    };
+  public Runnable stdInHandler(Writer stdin, Reader stdout, Reader stderr) {
+    throw new UnsupportedOperationException("override before use.");
   }
 
   /**
@@ -66,14 +69,16 @@ public abstract class AbstractPromptHandler implements PromptHandler {
    *
    * @return 프롬프트 처리 스레드. non-null.
    */
-  protected abstract Runnable stdOutHandler(Writer stdin, Reader stdout, Reader stderr);
+  public abstract Runnable stdOutHandler(Writer stdin, Reader stdout, Reader stderr);
 
   /**
    * 별도의 스레드에서 지속적으로 표준에러를 처리해야 하는지 여부.
    *
    * @return 표준에러를 처리하는 별도의 스레드가 필요하면 {@code true}. 기본값 {@code false}.
+   *
+   * @see #stdErrHandler(Writer, Reader, Reader) {@code true}를 반환하도록 오버라이드는 하는 경우, 함께 오버라이드 해야 한다.
    */
-  protected boolean hasStdErrHandler() {
+  public boolean hasStdErrHandler() {
     return false;
   }
 
@@ -85,10 +90,11 @@ public abstract class AbstractPromptHandler implements PromptHandler {
    * @param stderr 표준에러.
    *
    * @return 표준에러를 처리하는 스레드. non-null.
+   *
+   * @see #hasStdErrHandler() {@code true}를 반환하도록 오버라이드는 하는 경우, 함께 오버라이드 해야 한다.
    */
-  protected Runnable stdErrHandler(Writer stdin, Reader stdout, Reader stderr) {
-    return () -> {
-    };
+  public Runnable stdErrHandler(Writer stdin, Reader stdout, Reader stderr) {
+    throw new UnsupportedOperationException("override before use.");
   }
 
   @Override
@@ -105,6 +111,7 @@ public abstract class AbstractPromptHandler implements PromptHandler {
         Reader stdout = new InputStreamReader(process.getInputStream(), this.stdOutCharset);
         Reader stderr = new InputStreamReader(process.getErrorStream(), this.stdErrCharset)
     ) {
+      // 표준출력만 인식해서 처리한다.
       executorService.submit(stdOutHandler(stdin, stdout, stderr));
 
       if (hasStdInHandler())
